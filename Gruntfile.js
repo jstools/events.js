@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       options: {
           stderr: false
       },
-      'git-commit': {
+      'git-commit-version': {
         command: 'git add package.json & git add bower.json & git commit -m "increasing version" & git push origin master'
       },
       'npm-publish': {
@@ -41,9 +41,11 @@ module.exports = function(grunt) {
     pkg.version = version;
     bower.version = version;
 
-    grunt.file.write( 'package.json', JSON.stringify(pkg) );
-    grunt.file.write( 'bower.json', JSON.stringify(bower) );
+    grunt.file.write( 'package.json', JSON.stringify(pkg, null, 4) );
+    grunt.file.write( 'bower.json', JSON.stringify(bower, null, 4) );
   });
+
+  grunt.registerTask('publish', [ 'increase-version', 'git-commit-version', 'npm-publish' ]);
 
   // Default task(s).
   // grunt.registerTask('default', ['dev']);
