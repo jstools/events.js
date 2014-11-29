@@ -2,7 +2,7 @@
     "name": "jstool-events",
     "version": "0.0.6",
     "description": "simple javascript events handler",
-    "main": "standalone-events.js",
+    "main": "events.js",
     "scripts": {
         "test": "grunt test"
     },

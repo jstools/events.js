@@ -33,12 +33,10 @@ module.exports = function(grunt) {
         command: 'npm publish'
       }
     }
-    
-
   });
 
   // Dev Build
-  grunt.registerTask('increase-version-json', function () {
+  grunt.registerTask('files:increase-version', function () {
     var pkg = grunt.file.readJSON('package.json'),
         bower = grunt.file.readJSON('bower.json');
 
@@ -53,11 +51,8 @@ module.exports = function(grunt) {
     grunt.file.write( 'bower.json', JSON.stringify(bower, null, 4) );
   });
 
-  grunt.registerTask('git-stuff', [ 'shell:git-add-package', 'shell:git-add-bower', 'shell:git-commit-version', 'shell:git-push' ]);
+  grunt.registerTask('git:increase-version', [ 'shell:git-add-package', 'shell:git-add-bower', 'shell:git-commit-version', 'shell:git-push' ]);
 
-  grunt.registerTask('increase-version', [ 'increase-version-json', 'git-stuff', 'shell:npm-publish' ]);
-
-  // Default task(s).
-  // grunt.registerTask('default', ['dev']);
+  grunt.registerTask('publish', [ 'files:increase-version', 'git:increase-version', 'shell:npm-publish' ]);
 
 };
