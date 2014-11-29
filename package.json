@@ -1,6 +1,6 @@
 {
     "name": "jstools-events",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "simple javascript events handler",
     "main": "standalone-events.js",
     "scripts": {
