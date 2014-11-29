@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/jstools/events/issues"
   },
-  "homepage": "https://github.com/jstools/events"
+  "homepage": "https://github.com/jstools/events",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-shell": "latest",
+    "load-grunt-tasks": "latest",
+    "time-grunt": "latest"
+  }
 }
