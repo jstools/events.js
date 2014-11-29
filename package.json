@@ -1,0 +1,24 @@
+{
+  "name": "jstools-events",
+  "version": "0.0.1",
+  "description": "simple javascript events handler",
+  "main": "standalone-events.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstools/events.git"
+  },
+  "keywords": [
+    "javascript",
+    "jstools",
+    "events"
+  ],
+  "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jstools/events/issues"
+  },
+  "homepage": "https://github.com/jstools/events"
+}
