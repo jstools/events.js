@@ -45,7 +45,7 @@ module.exports = function(grunt) {
     grunt.file.write( 'bower.json', JSON.stringify(bower, null, 4) );
   });
 
-  grunt.registerTask('increase-version', [ 'increase-version', 'shell:git-commit-version', 'shell:npm-publish' ]);
+  grunt.registerTask('increase-version', [ 'increase-version-json', 'shell:git-commit-version', 'shell:npm-publish' ]);
 
   // Default task(s).
   // grunt.registerTask('default', ['dev']);
