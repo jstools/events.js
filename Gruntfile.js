@@ -15,16 +15,24 @@ module.exports = function(grunt) {
 
     shell: {
       options: {
-          stderr: false
+        stderr: false
+      },
+      'git-add-package': {
+        command: 'git add package.json'
+      },
+      'git-add-bower': {
+        command: 'git add bower.json'
       },
       'git-commit-version': {
-        command: 'git add package.json & git add bower.json & git commit -m "increasing version" & git push origin master'
+        command: 'git commit -m "increasing version"'
+      },
+      'git-push': {
+        command: 'git push origin master'
       },
       'npm-publish': {
         command: 'npm publish'
       }
     }
-
     
 
   });
@@ -45,7 +53,9 @@ module.exports = function(grunt) {
     grunt.file.write( 'bower.json', JSON.stringify(bower, null, 4) );
   });
 
-  grunt.registerTask('increase-version', [ 'increase-version-json', 'shell:git-commit-version', 'shell:npm-publish' ]);
+  grunt.registerTask('git-stuff', [ 'shell:git-add-package', 'shell:git-add-bower', 'shell:git-commit-version', 'shell:git-push' ]);
+
+  grunt.registerTask('increase-version', [ 'increase-version-json', 'git-stuff', 'shell:npm-publish' ]);
 
   // Default task(s).
   // grunt.registerTask('default', ['dev']);

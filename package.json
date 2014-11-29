@@ -1,5 +1,5 @@
 {
-    "name": "jstools-events",
+    "name": "jstool-events",
     "version": "0.0.5",
     "description": "simple javascript events handler",
     "main": "standalone-events.js",
