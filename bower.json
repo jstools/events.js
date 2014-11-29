@@ -1,23 +1,23 @@
 {
-  "name": "jstools-events",
-  "main": "events.js",
-  "version": "0.0.1",
-  "homepage": "https://github.com/jstools/events",
-  "authors": [
-    "Jesús Germade <jesus@germade.es>"
-  ],
-  "description": "simple javascript events handler",
-  "keywords": [
-    "javascript",
-    "jstools",
-    "events"
-  ],
-  "license": "ISC",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+    "name": "jstools-events",
+    "main": "events.js",
+    "version": "0.0.2",
+    "homepage": "https://github.com/jstools/events",
+    "authors": [
+        "Jesús Germade <jesus@germade.es>"
+    ],
+    "description": "simple javascript events handler",
+    "keywords": [
+        "javascript",
+        "jstools",
+        "events"
+    ],
+    "license": "ISC",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
 }
