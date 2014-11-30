@@ -22,10 +22,11 @@
     },
     "homepage": "https://github.com/jstools/events",
     "devDependencies": {
-        "grunt": "latest",
-        "grunt-shell": "latest",
-        "load-grunt-tasks": "latest",
-        "time-grunt": "latest",
-        "grunt-increase-version": "latest"
-    }
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "latest",
+    "grunt-increase-version": "latest",
+    "grunt-shell": "latest",
+    "load-grunt-tasks": "latest",
+    "time-grunt": "latest"
+  }
 }

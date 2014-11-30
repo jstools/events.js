@@ -17,11 +17,8 @@ module.exports = function(grunt) {
       options: {
         stderr: false
       },
-      'git-add-package': {
-        command: 'git add package.json'
-      },
-      'git-add-bower': {
-        command: 'git add bower.json'
+      'git-add': {
+        command: 'git add --all'
       },
       'git-commit-version': {
         command: 'git commit -m "increasing version"'
@@ -38,30 +35,25 @@ module.exports = function(grunt) {
         options: {
         },
         files: {
-          src: [ 'bower.json', '.bower.json' ]
+          src: [ 'bower.json' ]
         }
+      }
+    },
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+      },
+      min: {
+        src: [
+          '<%= pkg.main %>'
+        ],
+        dest: '<%= pkg.main.replace(/\.js$/, \'.min.js\') %>'
       }
     }
   });
 
-  // Dev Build
-  // grunt.registerTask('files:increase-version', function () {
-  //   var pkg = grunt.file.readJSON('package.json'),
-  //       bower = grunt.file.readJSON('bower.json');
+  grunt.registerTask('git:increase-version', [ 'shell:git-add', 'shell:git-commit-version', 'shell:git-push' ]);
 
-  //   var version = pkg.version.split('.');
-  //   version[2]++;
-  //   version = version.join('.');
-
-  //   pkg.version = version;
-  //   bower.version = version;
-
-  //   grunt.file.write( 'package.json', JSON.stringify(pkg, null, 4) );
-  //   grunt.file.write( 'bower.json', JSON.stringify(bower, null, 4) );
-  // });
-
-  grunt.registerTask('git:increase-version', [ 'shell:git-add-package', 'shell:git-add-bower', 'shell:git-commit-version', 'shell:git-push' ]);
-
-  grunt.registerTask('publish', [ 'increase-version', 'git:increase-version', 'shell:npm-publish' ]);
+  grunt.registerTask('publish', [ 'uglify:min', 'increase-version', 'git:increase-version', 'shell:npm-publish' ]);
 
 };
