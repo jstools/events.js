@@ -1,8 +1,9 @@
 {
     "name": "jstool-events",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "simple javascript events handler",
     "main": "events.js",
+    "jstool": "events.js",
     "scripts": {
         "test": "grunt test"
     },
