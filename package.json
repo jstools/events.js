@@ -1,6 +1,6 @@
 {
     "name": "jstool-events",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "simple javascript events handler",
     "main": "events.js",
     "jstool": "events.js",
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jstools/events.git"
+        "url": "https://github.com/jstools/events.js.git"
     },
     "keywords": [
         "javascript",
@@ -19,15 +19,15 @@
     "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/jstools/events/issues"
+        "url": "https://github.com/jstools/events.js/issues"
     },
-    "homepage": "https://github.com/jstools/events",
+    "homepage": "https://github.com/jstools/events.js",
     "devDependencies": {
-        "grunt": "^0.4.5",
-        "grunt-contrib-uglify": "latest",
-        "grunt-increase-version": "latest",
-        "grunt-shell": "latest",
-        "load-grunt-tasks": "latest",
-        "time-grunt": "latest"
+        "grunt": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-increase-version": "*",
+        "grunt-shell": "*",
+        "load-grunt-tasks": "*",
+        "time-grunt": "*"
     }
 }
