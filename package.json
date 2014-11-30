@@ -1,6 +1,6 @@
 {
     "name": "jstool-events",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "simple javascript events handler",
     "main": "events.js",
     "scripts": {
@@ -22,11 +22,11 @@
     },
     "homepage": "https://github.com/jstools/events",
     "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "latest",
-    "grunt-increase-version": "latest",
-    "grunt-shell": "latest",
-    "load-grunt-tasks": "latest",
-    "time-grunt": "latest"
-  }
+        "grunt": "^0.4.5",
+        "grunt-contrib-uglify": "latest",
+        "grunt-increase-version": "latest",
+        "grunt-shell": "latest",
+        "load-grunt-tasks": "latest",
+        "time-grunt": "latest"
+    }
 }
