@@ -1,6 +1,6 @@
 {
     "name": "jstool-events",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "description": "simple javascript events handler",
     "main": "events.js",
     "scripts": {
@@ -16,7 +16,7 @@
         "events"
     ],
     "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
-    "license": "ISC",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/jstools/events.js/issues"
     },
