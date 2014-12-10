@@ -25,17 +25,17 @@
  * 
  */
 
-(function (Events) {
+(function (definition) {
 
   if ( typeof window === 'undefined' ) {
     if ( typeof module !== 'undefined' ) {
-      module.exports = Events;
+      module.exports = definition();
     }
   } else {
     if ( window.fn ) {
-      fn.define('Events', Events);
+      fn.define('Events', definition );
     } else if( !window.Events ) {
-      window.Events = Events;
+      window.Events = definition();
     }
   }
 
