@@ -49,10 +49,10 @@
         handlers.push({ handler: handler, context: context });
     }
 
-    function _triggerEvent (handlers, data, caller) {
+    function _triggerEvent (handlers, attrs, caller) {
         if( handlers ) {
             for( var i = 0, len = handlers.length; i < len; i++ ) {
-                handlers[i].handler.call(caller, data);
+                handlers[i].handler.apply(caller, attrs);
             }
             return len;
         }
@@ -92,10 +92,10 @@
             _addListener(listenersOnce[eventName], handler, context);
         };
 
-        target.trigger = function (eventName, data, caller) {
-            _triggerEvent(listeners[eventName], data, caller);
+        target.trigger = function (eventName, attrs, caller) {
+            _triggerEvent(listeners[eventName], attrs, caller);
 
-            var len = _triggerEvent(listenersOnce[eventName], data, caller);
+            var len = _triggerEvent(listenersOnce[eventName], attrs, caller);
             if( len ) {
                 listenersOnce[eventName].splice(0, len);
             }
