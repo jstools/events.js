@@ -1,5 +1,5 @@
 {
-    "name": "jn-events",
+    "name": "jstools-events",
     "version": "0.0.17",
     "description": "simple javascript events handler",
     "main": "events.js",
@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jstools/jn-events.git"
+        "url": "https://github.com/jstools/events.git"
     },
     "keywords": [
         "javascript",
@@ -18,9 +18,9 @@
     "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/jstools/jn-events/issues"
+        "url": "https://github.com/jstools/events/issues"
     },
-    "homepage": "https://github.com/jstools/jn-events",
+    "homepage": "https://github.com/jstools/events",
     "devDependencies": {
         "grunt": "*",
         "grunt-contrib-uglify": "*",

@@ -1,8 +1,8 @@
 jsTool: Events
 ==============
-
-[![npm version](https://badge.fury.io/js/jn-events.svg)](http://badge.fury.io/js/jn-events)
-[![Build Status](https://travis-ci.org/jstools/jn-events.svg?branch=master)](https://travis-ci.org/jstools/jn-events)
+[![Bower version](https://badge.fury.io/bo/jstools-events.svg)](http://badge.fury.io/bo/jstools-events)
+[![npm version](https://badge.fury.io/js/jstools-events.svg)](http://badge.fury.io/js/jstools-events)
+[![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
 
 ```.sh
 npm install jn-events --save
