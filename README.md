@@ -1,4 +1,4 @@
-jEngine: Events
+jEngine: Events [![wercker status](https://app.wercker.com/status/54d5da14c71194ac8b5a8b1828a61ce3/s "wercker status")](https://app.wercker.com/project/bykey/54d5da14c71194ac8b5a8b1828a61ce3)
 ===============
 [![Bower version](https://badge.fury.io/bo/jstools-events.svg)](http://badge.fury.io/bo/jstools-events)
 [![npm version](https://badge.fury.io/js/jstools-events.svg)](http://badge.fury.io/js/jstools-events)
