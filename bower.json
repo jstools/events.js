@@ -1,7 +1,7 @@
 {
     "name": "jstools-events",
     "main": "events.js",
-    "version": "0.0.19",
+    "version": "0.0.20",
     "homepage": "https://github.com/jstools/events",
     "authors": [
         "Jesús Germade <jesus@germade.es>"
