@@ -9,11 +9,11 @@ describe('jstool-events: Events', function () {
 	it('event suscription', function () {
 		var flag = false;
 
-		obj.on('foo', function () {
+		obj.$$on('foo', function () {
 			flag = true;
 		});
 
-		obj.trigger('foo');
+		obj.$$trigger('foo');
 
 		expect(flag).toBe(true);
 	});
@@ -21,12 +21,12 @@ describe('jstool-events: Events', function () {
 	it('event suscription twice', function () {
 		var count = false;
 
-		obj.on('foo', function () {
+		obj.$$on('foo', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.$$trigger('foo');
+		obj.$$trigger('foo');
 
 		expect(count).toBe(2);
 	});
@@ -34,12 +34,12 @@ describe('jstool-events: Events', function () {
 	it('event suscription once', function () {
 		var count = false;
 
-		obj.once('foo', function () {
+		obj.$$once('foo', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.$$trigger('foo');
+		obj.$$trigger('foo');
 
 		expect(count).toBe(1);
 	});

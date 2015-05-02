@@ -1,10 +1,11 @@
 {
     "name": "jstools-events",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "description": "simple javascript events handler",
     "main": "events.js",
     "scripts": {
-        "test": "grunt test"
+        "test": "grunt test",
+        "posttest": "grunt uglify:min"
     },
     "repository": {
         "type": "git",
