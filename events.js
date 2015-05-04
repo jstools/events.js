@@ -29,9 +29,9 @@
 
   if ( typeof module !== 'undefined' ) {
     module.exports = factory();
-  } else if( root !== undefined ) {
+  } else if( root ) {
     if( root.define ) {
-      define('Events', factory );
+      root.define('Events', factory );
     } else if( root.angular ) {
       root.angular.module('jstools.events', []).factory('Events', function () { return factory(true); });
     } else if( !root.Events ) {
