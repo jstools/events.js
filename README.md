@@ -17,9 +17,9 @@ Usage
 ```.js
 var obj = new Events();
 
-obj.$$on('foo', function () {
+obj.on('foo', function () {
   flag = true;
 });
 
-obj.$$trigger('foo');
+obj.trigger('foo');
 ```

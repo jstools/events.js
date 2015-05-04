@@ -43,4 +43,46 @@ describe('jstool-events: Events', function () {
 
 		expect(count).toBe(1);
 	});
+
+	it('event suscription off', function () {
+		var count = false,
+				increaseCount = function () {
+					count++;
+				};
+
+		obj.on('foo', increaseCount);
+
+		obj.trigger('foo');
+		obj.trigger('foo');
+
+		obj.off('foo', increaseCount);
+
+		obj.trigger('foo');
+
+		expect(count).toBe(2);
+	});
+
+	it('event passing data', function () {
+		var result = false;
+
+		obj.on('foo', function (value) {
+			result = value;
+		});
+
+		obj.trigger('foo', ['bar']);
+
+		expect(result).toBe('bar');
+	});
+
+	it('event passing data', function () {
+		var result = false;
+
+		obj.on('foo', function (value, value2) {
+			result = value + ', ' + value2;
+		});
+
+		obj.trigger('foo', ['foo', 'bar']);
+
+		expect(result).toBe('foo, bar');
+	});
 });
