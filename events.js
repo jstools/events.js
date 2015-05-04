@@ -31,7 +31,7 @@
     module.exports = factory();
   } else if( root ) {
     if( root.define ) {
-      root.define('Events', factory );
+      root.define('Events', function () { return factory(); } );
     } else if( root.angular ) {
       root.angular.module('jstools.events', []).factory('Events', function () { return factory(true); });
     } else if( !root.Events ) {

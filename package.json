@@ -1,39 +1,40 @@
 {
-    "name": "jstools-events",
-    "version": "0.1.1",
-    "description": "simple javascript events handler",
-    "main": "events.js",
-    "scripts": {
-        "test": "grunt test",
-        "posttest": "grunt uglify:min"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/jstools/events.git"
-    },
-    "keywords": [
-        "javascript",
-        "jstools",
-        "events"
-    ],
-    "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/jstools/events/issues"
-    },
-    "homepage": "https://github.com/jstools/events",
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-increase-version": "*",
-        "grunt-karma": "^0.9.0",
-        "grunt-shell": "*",
-        "jasmine": "^2.1.1",
-        "jasmine-core": "^2.1.3",
-        "karma": "^0.12.28",
-        "karma-jasmine": "^0.3.2",
-        "karma-chrome-launcher": "^0.1.4",
-        "load-grunt-tasks": "*",
-        "time-grunt": "*"
-    }
+  "name": "jstools-events",
+  "version": "0.1.2",
+  "description": "simple javascript events handler",
+  "main": "events.js",
+  "scripts": {
+    "test": "grunt test",
+    "posttest": "grunt uglify:min"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstools/events.git"
+  },
+  "keywords": [
+    "javascript",
+    "jstools",
+    "events"
+  ],
+  "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jstools/events/issues"
+  },
+  "homepage": "https://github.com/jstools/events",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-increase-version": "*",
+    "grunt-karma": "^0.9.0",
+    "grunt-shell": "*",
+    "jasmine": "^2.1.1",
+    "jasmine-core": "^2.1.3",
+    "karma": "^0.12.28",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-jasmine": "^0.3.2",
+    "load-grunt-tasks": "*",
+    "time-grunt": "*"
+  }
 }
