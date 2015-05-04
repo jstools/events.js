@@ -5,16 +5,16 @@ jEngine: Events [![wercker status](https://app.wercker.com/status/54d5da14c71194
 [![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
 Installation
 ------------
-```.sh
+``` sh
 npm install jstools-events --save
 ```
 or
-```.sh
+``` sh
 bower install jn-events --save
 ```
 Usage
 -----
-```.js
+``` js
 var obj = new Events();
 
 obj.on('foo', function () {
