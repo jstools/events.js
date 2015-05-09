@@ -10,7 +10,7 @@ npm install jstools-events --save
 ```
 or
 ``` sh
-bower install jn-events --save
+bower install jstools-events --save
 ```
 Usage
 -----
@@ -22,4 +22,22 @@ obj.on('foo', function () {
 });
 
 obj.trigger('foo');
+```
+AngularJS Module
+----------------
+``` js
+angular.module('myApp', ['jstools.events'])
+
+  .controller('AppCtrl', ['$scope', 'Events', function ($scope, Events) {
+
+    var obj = new Events();
+
+    obj.$$on('foo', function () {
+      flag = true;
+    });
+
+    obj.$$trigger('foo');
+
+  }]);
+
 ```
