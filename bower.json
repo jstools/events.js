@@ -1,5 +1,5 @@
 {
-    "name": "jstools-events",
+    "name": "jengine-events",
     "main": "events.js",
     "version": "0.1.3",
     "homepage": "https://github.com/jstools/events",
