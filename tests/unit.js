@@ -1,4 +1,8 @@
-describe('jstool-events: Events', function () {
+
+var Events = require('../events.js'),
+		assert = require('assert');
+
+describe('Events', function () {
 
 	var obj;
 
@@ -15,7 +19,7 @@ describe('jstool-events: Events', function () {
 
 		obj.trigger('foo');
 
-		expect(flag).toBe(true);
+		assert.strictEqual(flag, true);
 	});
 
 	it('event suscription twice', function () {
@@ -28,7 +32,7 @@ describe('jstool-events: Events', function () {
 		obj.trigger('foo');
 		obj.trigger('foo');
 
-		expect(count).toBe(2);
+		assert.strictEqual(count, 2);
 	});
 
 	it('event suscription once', function () {
@@ -41,7 +45,7 @@ describe('jstool-events: Events', function () {
 		obj.trigger('foo');
 		obj.trigger('foo');
 
-		expect(count).toBe(1);
+		assert.strictEqual(count, 1);
 	});
 
 	it('event suscription off', function () {
@@ -59,7 +63,7 @@ describe('jstool-events: Events', function () {
 
 		obj.trigger('foo');
 
-		expect(count).toBe(2);
+		assert.strictEqual(count, 2);
 	});
 
 	it('event passing data', function () {
@@ -71,7 +75,7 @@ describe('jstool-events: Events', function () {
 
 		obj.trigger('foo', ['bar']);
 
-		expect(result).toBe('bar');
+		assert.strictEqual(result, 'bar');
 	});
 
 	it('event passing data', function () {
@@ -83,6 +87,6 @@ describe('jstool-events: Events', function () {
 
 		obj.trigger('foo', ['foo', 'bar']);
 
-		expect(result).toBe('foo, bar');
+		assert.strictEqual(result, 'foo, bar');
 	});
 });

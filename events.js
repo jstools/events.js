@@ -33,7 +33,7 @@
     if( root.define ) {
       root.define('Events', function () { return factory(); } );
     } else if( root.angular ) {
-      root.angular.module('jstools.events', []).factory('Events', function () { return factory(true); });
+      root.angular.module('eventsWrapper', []).factory('Events', function () { return factory(true); });
     } else if( !root.Events ) {
       root.Events = factory();
     }
@@ -42,11 +42,14 @@
 })(this, function (ng) {
 	'use strict';
 
-  var method = ng ? {
-    on: '$$on', once: '$$once', off: '$$off', trigger: '$$triger'
-  } : {
-    on: 'on', once: 'once', off: 'off', trigger: 'trigger'
+  var methods = {
+    std: { on: 'on', once: 'once', off: 'off', trigger: 'trigger' },
+    safe: { on: '$$on', once: '$$once', off: '$$off', trigger: '$$trigger' }
   };
+
+  function getMethods (ngSafe) {
+    return ngSafe ? methods.safe : methods.std;
+  }
 
 	function _addListener (handlers, handler, context) {
         if( ! handler instanceof Function ) {
@@ -83,10 +86,12 @@
         }
     }
 
-    function Events (target) {
+    function Events (target, ngSafe) {
         target = target || this;
-        var listeners = {};
-        var listenersOnce = {};
+
+        var listeners = {},
+            listenersOnce = {},
+            method = getMethods(ngSafe);
 
         target[method.on] = function (eventName, handler, context) {
             listeners[eventName] = listeners[eventName] || [];

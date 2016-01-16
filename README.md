@@ -6,11 +6,11 @@ jEngine: Events [![wercker status](https://app.wercker.com/status/54d5da14c71194
 Installation
 ------------
 ``` sh
-npm install jengine-events --save
+npm install events-wrapper --save
 ```
 or
 ``` sh
-bower install jengine-events --save
+bower install events-wrapper --save
 ```
 Usage
 -----
