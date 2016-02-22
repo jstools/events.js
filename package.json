@@ -1,28 +1,28 @@
 {
-  "name": "events-wrapper",
-  "version": "0.2.0",
-  "description": "simple javascript events handler",
-  "main": "events.js",
-  "scripts": {
-    "test": "$(npm bin)/mocha tests"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jstools/events.git"
-  },
-  "keywords": [
-    "javascript",
-    "jstools",
-    "events"
-  ],
-  "author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jstools/events/issues"
-  },
-  "homepage": "https://github.com/jstools/events",
-  "devDependencies": {
-    "mocha": "^2.3.4",
-    "nitro": "^1.5.41"
-  }
+	"name": "events-wrapper",
+	"version": "0.2.1",
+	"description": "simple javascript events handler",
+	"main": "events.js",
+	"scripts": {
+		"test": "$(npm bin)/mocha tests"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jstools/events.git"
+	},
+	"keywords": [
+		"javascript",
+		"jstools",
+		"events"
+	],
+	"author": "Jesús Manuel Germade Castiñeiras <jesus@germade.es>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/jstools/events/issues"
+	},
+	"homepage": "https://github.com/jstools/events",
+	"devDependencies": {
+		"mocha": "^2.3.4",
+		"nitro": "^1.5.41"
+	}
 }
