@@ -69,7 +69,8 @@ describe('Events', function () {
 	it('event passing data', function () {
 		var result = false;
 
-		obj.on('foo', function (value) {
+		obj.on('foo', function (e, value) {
+			assert.strictEqual(e.name, 'foo');
 			result = value;
 		});
 
@@ -81,7 +82,8 @@ describe('Events', function () {
 	it('event passing data', function () {
 		var result = false;
 
-		obj.on('foo', function (value, value2) {
+		obj.on('foo', function (e, value, value2) {
+			assert.strictEqual(e.name, 'foo');
 			result = value + ', ' + value2;
 		});
 
