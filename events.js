@@ -107,19 +107,42 @@
         listenersOnce = {},
         method = getMethods(ngSafe);
 
+    function checkEach (_method, eventName, arg1, arg2, arg3) {
+      if( eventName instanceof Array ) {
+        eventName.forEach(function (_eventName) { target[_method](_eventName, arg1, arg2, arg3); });
+        return true;
+      }
+      if( typeof eventName !== 'string' ) {
+        throw new Error('event name should be a string');
+      }
+      if( / /.test(eventName) ) {
+        target[_method](eventName.split(/ +/), arg1, arg2, arg3);
+        return true;
+      }
+    }
+
     target[method.on] = function (eventName, handler, context) {
+      if( checkEach(method.on, eventName, handler, context) ) {
+        return target;
+      }
       listeners[eventName] = listeners[eventName] || [];
       _addListener(listeners[eventName], handler, context);
       return target;
     };
 
     target[method.once] = function (eventName, handler, context) {
+      if( checkEach(method.once, eventName, handler, context) ) {
+        return target;
+      }
       listenersOnce[eventName] = listenersOnce[eventName] || [];
       _addListener(listenersOnce[eventName], handler, context);
       return target;
     };
 
     target[method.trigger] = function (eventName, attrs, caller) {
+      if( checkEach(method.trigger, eventName, attrs, caller) ) {
+        return target;
+      }
       var e = new Event(eventName, attrs, caller);
 
       _triggerEvent(e, listeners[eventName]);
@@ -134,6 +157,9 @@
     };
 
     target[method.off] = function (eventName, handler) {
+      if( checkEach(method.off, eventName, handler) ) {
+        return target;
+      }
       if( handler === undefined ) {
         _emptyListener(listeners[eventName]);
         _emptyListener(listenersOnce[eventName]);

@@ -22,6 +22,32 @@ describe('Events', function () {
 		assert.strictEqual(flag, true);
 	});
 
+	it('event multi-suscription', function () {
+		var count = 0;
+
+		obj.on('foo bar', function () {
+			count++;
+		});
+
+		obj.trigger('foo');
+		obj.trigger('bar');
+
+		assert.strictEqual(count, 2);
+	});
+
+	it('event multi-suscription', function () {
+		var count = 0;
+
+		obj.on(['foo','bar'], function () {
+			count++;
+		});
+
+		obj.trigger('foo');
+		obj.trigger('bar');
+
+		assert.strictEqual(count, 2);
+	});
+
 	it('event suscription twice', function () {
 		var count = false;
 
@@ -48,6 +74,22 @@ describe('Events', function () {
 		assert.strictEqual(count, 1);
 	});
 
+	it('event multi-suscription once', function () {
+		var count = 0;
+
+		obj.once('foo bar', function () {
+			count++;
+		});
+
+		obj.trigger('foo');
+		obj.trigger('bar');
+
+		obj.trigger('foo');
+		obj.trigger('bar');
+
+		assert.strictEqual(count, 2);
+	});
+
 	it('event suscription off', function () {
 		var count = false,
 				increaseCount = function () {
@@ -62,6 +104,23 @@ describe('Events', function () {
 		obj.off('foo', increaseCount);
 
 		obj.trigger('foo');
+
+		assert.strictEqual(count, 2);
+	});
+
+	it('event multi-suscription off', function () {
+		var count = false,
+				increaseCount = function () {
+					count++;
+				};
+
+		obj.on('foo bar', increaseCount);
+
+		obj.trigger('foo bar');
+
+		obj.off('foo bar', increaseCount);
+
+		obj.trigger('foo bar');
 
 		assert.strictEqual(count, 2);
 	});
