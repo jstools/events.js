@@ -65,7 +65,7 @@
   function Events (target, prefix) {
     this.listeners = {};
     if( target ) {
-      extendMethods(this, target, prefix);
+      extendMethods(this, target, prefix || '');
     }
   }
 
