@@ -1,21 +1,6 @@
 (function (root, factory) {
 
-  if( root.angular ) {
-    root.angular.module('eventsWrapper', []).provider('Events', function () {
-      var Events = factory();
-
-      this.escapeMethods = function () {
-        ['on', 'once', 'off', 'trigger'].forEach(function (method) {
-          Events.prototype['$$' + method] = Events.prototype[method];
-          delete Events.prototype[method];
-        });
-      };
-
-      this.$get = function () {
-        return Events;
-      };
-    });
-  } else if (typeof define === 'function' && define.amd) {
+  if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module.
       define(factory);
   } else if (typeof module === 'object' && module.exports) {
@@ -70,19 +55,17 @@
     delete handler.__run_once;
   }
 
-  function extendMethods (evt, target) {
-    extend(target, {
-      on: evt.on.bind(evt),
-      once: evt.once.bind(evt),
-      off: evt.off.bind(evt),
-      trigger: evt.trigger.bind(evt)
-    });
+  function extendMethods (evt, target, prefix) {
+    target[prefix + 'on'] = evt.on.bind(evt);
+    target[prefix + 'once'] = evt.once.bind(evt);
+    target[prefix + 'off'] = evt.off.bind(evt);
+    target[prefix + 'trigger'] = evt.trigger.bind(evt);
   }
 
-  function Events (target) {
+  function Events (target, prefix) {
     this.listeners = {};
     if( target ) {
-      extendMethods(this, target);
+      extendMethods(this, target, prefix);
     }
   }
 
