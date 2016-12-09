@@ -1,4 +1,4 @@
-jsTools: Events [![npm version](https://badge.fury.io/js/jengine-events.svg)](http://badge.fury.io/js/jengine-events) [![Bower version](https://badge.fury.io/bo/jengine-events.svg)](http://badge.fury.io/bo/jengine-events)
+jsTools: Events [![npm version](https://badge.fury.io/js/events-wrapper.svg)](http://badge.fury.io/js/events-wrapper) [![Bower version](https://badge.fury.io/bo/events-wrapper.svg)](http://badge.fury.io/bo/events-wrapper)
 ===============
 
 [![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
