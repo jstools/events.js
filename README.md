@@ -2,7 +2,7 @@ jsTools: Events [![](https://img.shields.io/npm/v/events-wrapper.svg)](https://w
 ===============
 
 [![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
-[![wercker status](https://app.wercker.com/status/54d5da14c71194ac8b5a8b1828a61ce3/s "wercker status")](https://app.wercker.com/project/bykey/54d5da14c71194ac8b5a8b1828a61ce3)
+[![wercker status](https://app.wercker.com/status/54d5da14c71194ac8b5a8b1828a61ce3/s/master "wercker status")](https://app.wercker.com/project/byKey/54d5da14c71194ac8b5a8b1828a61ce3)
 
 Installation
 ------------
