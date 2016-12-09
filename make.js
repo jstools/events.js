@@ -1,4 +1,4 @@
-'use strict';
+/* global require, process */
 
 require('nitro')(function (nitro) {
 

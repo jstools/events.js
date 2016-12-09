@@ -1,6 +1,15 @@
+/* global require, describe, it, beforeEach, process */
 
-var Events = require('../events.js'),
+if( typeof require !== 'undefined' ) { // if is nodejs (not browser)
+
+var Events = require( process.env.TEST_JS === 'min' ? '../events.min' : '../events' ),
 		assert = require('assert');
+
+/* eslint-disable */
+	console.log('testing', process.env.TEST_JS === 'min' ? 'events.min.js' : 'events.js' );
+/* eslint-enable */
+}
+
 
 describe('Events', function () {
 
@@ -87,7 +96,7 @@ describe('Events', function () {
 		obj.trigger('foo');
 		obj.trigger('bar');
 
-		assert.strictEqual(count, 2);
+		assert.strictEqual(count, 1);
 	});
 
 	it('event suscription off', function () {

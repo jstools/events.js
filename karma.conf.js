@@ -1,24 +1,48 @@
+/* global process */
+
 module.exports = function(config) {
+  'use strict';
+
+  var test_file = process.env.TEST_JS === 'min' ? 'events.min.js' : 'events.js';
+
+  /* eslint-disable */
+  console.log('test_file', test_file);
+  /* eslint-enable */
 
   var configuration = {
-    frameworks: ['jasmine'],
-    plugins: [ 'karma-jasmine', 'karma-chrome-launcher', 'karma-firefox-launcher' ],
+    frameworks: ['mocha', 'chai'],
+    plugins: [
+      'karma-mocha',
+      'karma-chai',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-story-reporter'
+    ],
     files: [
-      'events.js',
-      'tests/*.js'
+      test_file,
+      'tests/{,**/}*.js'
     ],
     browsers: [ 'Chrome', 'Firefox' ],
     customLaunchers: {
-      Chrome_travis_ci: {
+      Chrome_no_sandbox: {
         base: 'Chrome',
         flags: ['--no-sandbox']
       }
     },
-    singleRun: true
+    singleRun: true,
+    reporters: ['story']
   };
 
   if(process.env.TRAVIS){
-    configuration.browsers = ['Chrome_travis_ci', 'Firefox'];
+    configuration.browsers = [ 'Chrome_no_sandbox', 'Firefox' ];
+  }
+
+  if(process.env.DRONE){
+    configuration.browsers = [ 'Chrome' ];
+  }
+
+  if(process.env.WERCKER){
+    configuration.browsers = [ 'Chrome' ];
   }
 
   config.set(configuration);
