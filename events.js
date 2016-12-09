@@ -70,8 +70,20 @@
     delete handler.__run_once;
   }
 
-  function Events () {
+  function extendMethods (evt, target) {
+    extend(target, {
+      on: evt.on.bind(evt),
+      once: evt.once.bind(evt),
+      off: evt.off.bind(evt),
+      trigger: evt.trigger.bind(evt)
+    });
+  }
+
+  function Events (target) {
     this.listeners = {};
+    if( target ) {
+      extendMethods(this, target);
+    }
   }
 
   extend(Events.prototype, {

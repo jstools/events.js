@@ -1,7 +1,6 @@
 {
 	"name": "events-wrapper",
-	"main": "events.js",
-	"version": "0.2.2",
+	"main": "events.min.js",
 	"homepage": "https://github.com/jstools/events",
 	"authors": [
 		"Jesús Germade <jesus@germade.es>"
