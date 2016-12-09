@@ -1,5 +1,6 @@
-jsTools: Events [![](https://img.shields.io/npm/v/events-wrapper.svg)](https://www.npmjs.com/package/events-wrapper) [![](https://img.shields.io/bower/v/events-wrapper.svg)](http://bower.io/search/?q=events-wrapper) [![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
-===============
+# jsTools: Events
+
+[![](https://img.shields.io/npm/v/events-wrapper.svg)](https://www.npmjs.com/package/events-wrapper) [![](https://img.shields.io/bower/v/events-wrapper.svg)](http://bower.io/search/?q=events-wrapper) [![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
 
 Installation
 ------------
