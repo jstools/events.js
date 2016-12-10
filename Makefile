@@ -5,7 +5,7 @@ install:
 
 min: install
 	@echo "minified version"
-	@$(shell npm bin)/uglifyjs events.js -o events.min.js -c -m
+	@$(shell npm bin)/uglifyjs azazel.js -o azazel.min.js -c -m
 
 test.events:
 	$(shell npm bin)/mocha tests

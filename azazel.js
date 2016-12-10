@@ -10,7 +10,7 @@
     module.exports = factory();
   } else {
     // Browser globals (root is window)
-    root.Events = factory();
+    root.Azazel = factory();
   }
 
 })(this, function () {
@@ -59,17 +59,17 @@
     target[prefix + 'on'] = evt.on.bind(evt);
     target[prefix + 'once'] = evt.once.bind(evt);
     target[prefix + 'off'] = evt.off.bind(evt);
-    target[prefix + 'trigger'] = evt.trigger.bind(evt);
+    target[prefix + 'emit'] = evt.emit.bind(evt);
   }
 
-  function Events (target, prefix) {
+  function Azazel (target, prefix) {
     this.listeners = {};
     if( target ) {
       extendMethods(this, target, prefix || '');
     }
   }
 
-  extend(Events.prototype, {
+  extend(Azazel.prototype, {
     on: function (eventName, handler, useCapture) {
       var listeners = this.listeners;
       ( eventName instanceof Array ? eventName : eventName.split(/ +/) ).forEach(function (eventName) {
@@ -83,7 +83,7 @@
         addHandler(listeners, eventName, handler, useCapture);
       });
     },
-    trigger: function (eventName, params, thisArg) {
+    emit: function (eventName, params, thisArg) {
       var listeners = this.listeners;
       ( eventName instanceof Array ? eventName : eventName.split(/ +/) ).forEach(function (eventName) {
         if( !listeners[eventName] ) return;
@@ -112,5 +112,5 @@
     }
   });
 
-  return Events;
+  return Azazel;
 });

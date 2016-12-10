@@ -1,41 +1,26 @@
-# jsTools: Events
+# Azazel
 
-[![](https://img.shields.io/npm/v/events-wrapper.svg)](https://www.npmjs.com/package/events-wrapper) [![](https://img.shields.io/bower/v/events-wrapper.svg)](http://bower.io/search/?q=events-wrapper) [![Build Status](https://travis-ci.org/jstools/events.svg?branch=master)](https://travis-ci.org/jstools/events)
+Another events handler that can be attached to an object.
+
+[![](https://img.shields.io/npm/v/azazel.svg)](https://www.npmjs.com/package/azazel) [![](https://img.shields.io/bower/v/azazel.svg)](http://bower.io/search/?q=azazel) [![Build Status](https://travis-ci.org/kiltjs/azazel.svg?branch=master)](https://travis-ci.org/kiltjs/azazel)
 
 Installation
 ------------
 ``` sh
-npm install events-wrapper --save
+npm install azazel --save
 
 # alternatively you can use bower (minified version by default)
-bower install events-wrapper --save
+bower install azazel --save
 ```
 
 Usage
 -----
 ``` js
-var obj = new Events();
+var obj = new Azazel();
 
 obj.on('foo', function () {
   flag = true;
 });
 
 obj.trigger('foo');
-```
-AngularJS Module
-----------------
-``` js
-angular.module('myApp', ['jstools.events'])
-
-  .controller('AppCtrl', ['$scope', 'Events', function ($scope, Events) {
-
-    var obj = new Events();
-
-    obj.$$on('foo', function () {
-      flag = true;
-    });
-
-    obj.$$trigger('foo');
-
-  }]);
 ```

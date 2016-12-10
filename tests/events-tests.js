@@ -2,21 +2,21 @@
 
 if( typeof require !== 'undefined' ) { // if is nodejs (not browser)
 
-var Events = require( process.env.TEST_JS === 'min' ? '../events.min' : '../events' ),
+var Azazel = require( process.env.TEST_JS === 'min' ? '../azazel.min' : '../azazel' ),
 		assert = require('assert');
 
 /* eslint-disable */
-	console.log('testing', process.env.TEST_JS === 'min' ? 'events.min.js' : 'events.js' );
+	console.log('testing', process.env.TEST_JS === 'min' ? 'azazel.min.js' : 'azazel.js' );
 /* eslint-enable */
 }
 
 
-describe('Events', function () {
+describe('Azazel', function () {
 
 	var obj;
 
 	beforeEach(function () {
-		obj = new Events();
+		obj = new Azazel();
 	});
 
 	it('event suscription', function () {
@@ -26,7 +26,7 @@ describe('Events', function () {
 			flag = true;
 		});
 
-		obj.trigger('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(flag, true);
 	});
@@ -38,8 +38,8 @@ describe('Events', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
 		assert.strictEqual(count, 2);
 	});
@@ -51,8 +51,8 @@ describe('Events', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
 		assert.strictEqual(count, 2);
 	});
@@ -64,8 +64,8 @@ describe('Events', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.emit('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(count, 2);
 	});
@@ -77,8 +77,8 @@ describe('Events', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.emit('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(count, 1);
 	});
@@ -90,11 +90,11 @@ describe('Events', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
 		assert.strictEqual(count, 1);
 	});
@@ -107,12 +107,12 @@ describe('Events', function () {
 
 		obj.on('foo', increaseCount);
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.emit('foo');
+		obj.emit('foo');
 
 		obj.off('foo', increaseCount);
 
-		obj.trigger('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(count, 2);
 	});
@@ -125,11 +125,11 @@ describe('Events', function () {
 
 		obj.on('foo bar', increaseCount);
 
-		obj.trigger('foo bar');
+		obj.emit('foo bar');
 
 		obj.off('foo bar', increaseCount);
 
-		obj.trigger('foo bar');
+		obj.emit('foo bar');
 
 		assert.strictEqual(count, 2);
 	});
@@ -142,7 +142,7 @@ describe('Events', function () {
 			result = value;
 		});
 
-		obj.trigger('foo', ['bar']);
+		obj.emit('foo', ['bar']);
 
 		assert.strictEqual(result, 'bar');
 	});
@@ -155,19 +155,19 @@ describe('Events', function () {
 			result = value + ', ' + value2;
 		});
 
-		obj.trigger('foo', ['foo', 'bar']);
+		obj.emit('foo', ['foo', 'bar']);
 
 		assert.strictEqual(result, 'foo, bar');
 	});
 });
 
-describe('Events:target', function () {
+describe('Azazel:target', function () {
 
 	var obj;
 
 	beforeEach(function () {
 		obj = function () {};
-		new Events(obj);
+		new Azazel(obj);
 	});
 
 	it('event suscription', function () {
@@ -177,7 +177,7 @@ describe('Events:target', function () {
 			flag = true;
 		});
 
-		obj.trigger('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(flag, true);
 	});
@@ -189,8 +189,8 @@ describe('Events:target', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
 		assert.strictEqual(count, 2);
 	});
@@ -202,8 +202,8 @@ describe('Events:target', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
 		assert.strictEqual(count, 2);
 	});
@@ -215,8 +215,8 @@ describe('Events:target', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.emit('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(count, 2);
 	});
@@ -228,8 +228,8 @@ describe('Events:target', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.emit('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(count, 1);
 	});
@@ -241,11 +241,11 @@ describe('Events:target', function () {
 			count++;
 		});
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
-		obj.trigger('foo');
-		obj.trigger('bar');
+		obj.emit('foo');
+		obj.emit('bar');
 
 		assert.strictEqual(count, 1);
 	});
@@ -258,12 +258,12 @@ describe('Events:target', function () {
 
 		obj.on('foo', increaseCount);
 
-		obj.trigger('foo');
-		obj.trigger('foo');
+		obj.emit('foo');
+		obj.emit('foo');
 
 		obj.off('foo', increaseCount);
 
-		obj.trigger('foo');
+		obj.emit('foo');
 
 		assert.strictEqual(count, 2);
 	});
@@ -276,11 +276,11 @@ describe('Events:target', function () {
 
 		obj.on('foo bar', increaseCount);
 
-		obj.trigger('foo bar');
+		obj.emit('foo bar');
 
 		obj.off('foo bar', increaseCount);
 
-		obj.trigger('foo bar');
+		obj.emit('foo bar');
 
 		assert.strictEqual(count, 2);
 	});
@@ -293,7 +293,7 @@ describe('Events:target', function () {
 			result = value;
 		});
 
-		obj.trigger('foo', ['bar']);
+		obj.emit('foo', ['bar']);
 
 		assert.strictEqual(result, 'bar');
 	});
@@ -306,7 +306,7 @@ describe('Events:target', function () {
 			result = value + ', ' + value2;
 		});
 
-		obj.trigger('foo', ['foo', 'bar']);
+		obj.emit('foo', ['foo', 'bar']);
 
 		assert.strictEqual(result, 'foo, bar');
 	});
