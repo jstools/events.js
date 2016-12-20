@@ -27,11 +27,11 @@ build: test
 	node make build
 
 publish:
-  npm version patch -m "Increased version to %s"
-  @git push origin master
-  npm publish
-  git tag -a $(shell npm view azazel version) -m "Release of version $(shell npm view azazel version)"
-  git push --tags
+	npm version patch -m "Increased version to %s"
+	@git push origin master
+	npm publish
+	git tag -a $(shell npm view azazel version) -m "Release of version $(shell npm view azazel version)"
+	git push --tags
 
 # DEFAULT TASKS
 
