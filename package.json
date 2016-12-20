@@ -2,7 +2,7 @@
   "name": "azazel",
   "version": "1.0.0",
   "description": "simple javascript events handler",
-  "main": "events.js",
+  "main": "azazel.js",
   "scripts": {
     "test": "$(npm bin)/mocha tests"
   },
