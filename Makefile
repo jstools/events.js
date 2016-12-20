@@ -31,7 +31,7 @@ publish:
 	# npm version patch -m "Increased version to %s"
 	@git push origin master
 	npm publish
-	git tag -a v$(PKG_VERSION) -m "Release of version $(PKG_VERSION)"
+	git tag -a $(PKG_VERSION) -m "Release of version $(PKG_VERSION)"
 	git push --tags
 
 # DEFAULT TASKS
