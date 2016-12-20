@@ -30,7 +30,7 @@ publish: PKG_VERSION := $(shell npm version patch -m "Increased version to %s")
 publish:
 	# npm version patch -m "Increased version to %s"
 	@git push origin master
-  git push --tags
+	git push --tags
 	npm publish
 	# git tag -a $(PKG_VERSION) -m "Release of version $(PKG_VERSION)"
 
