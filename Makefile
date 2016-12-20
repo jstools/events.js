@@ -26,17 +26,12 @@ test: install test.events test.events-min karma karma.min
 build: test
 	node make build
 
-master.increaseVersion:
-	git fetch origin
-	git checkout master
-	@git pull origin master
-	@node make pkg:increaseVersion
-
-publish: build master.increaseVersion
-	git add .
-	-git commit -a -n -m "increased version [$(shell node make pkg:version)]"
-	@git push origin master
-	npm publish
+publish:
+  npm version patch -m "Increased version to %s"
+  @git push origin master
+  npm publish
+  git tag -a $(shell npm view azazel version) -m "Release of version $(shell npm view azazel version)"
+  git push --tags
 
 # DEFAULT TASKS
 
