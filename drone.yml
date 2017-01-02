@@ -1,0 +1,6 @@
+pipeline:
+  build:
+    image: nitrojs/node-karma
+    commands:
+      - npm install
+      - npm test
