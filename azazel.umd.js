@@ -1,4 +1,23 @@
 
+(function (root, factory) {
+  function moduleFactory () {
+    var module = { exports: {} };
+    factory(module);
+    return module.exports;
+  }
+
+  if( typeof define === 'function' && define.amd ) {
+      // AMD. Register as an anonymous module.
+      define([], moduleFactory);
+  } else if( typeof exports === 'object' && typeof module !== 'undefined' ) {
+      // CommonJS
+      factory(module);
+  } else {
+      // Browser globals
+      root.Azazel = moduleFactory();
+  }
+}(this, function (module) { // }));
+
 function extend (dest, src) {
   for( var key in src ) {
     dest[key] = src[key];
@@ -96,3 +115,4 @@ extend(Azazel.prototype, {
 });
 
 module.exports = Azazel;
+}));

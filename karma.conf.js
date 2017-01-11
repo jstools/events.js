@@ -3,7 +3,7 @@
 module.exports = function(config) {
   'use strict';
 
-  var test_file = process.env.TEST_JS === 'min' ? 'azazel.min.js' : 'azazel.js';
+  var test_file = process.env.TEST_JS === 'min' ? 'azazel.umd.min.js' : 'azazel.umd.js';
 
   /* eslint-disable */
   console.log('test_file', test_file);
