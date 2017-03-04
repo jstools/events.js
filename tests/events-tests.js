@@ -137,8 +137,7 @@ describe('Azazel', function () {
 	it('event passing data', function () {
 		var result = false;
 
-		obj.on('foo', function (e, value) {
-			assert.strictEqual(e.name, 'foo');
+		obj.on('foo', function (value) {
 			result = value;
 		});
 
@@ -150,8 +149,7 @@ describe('Azazel', function () {
 	it('event passing data', function () {
 		var result = false;
 
-		obj.on('foo', function (e, value, value2) {
-			assert.strictEqual(e.name, 'foo');
+		obj.on('foo', function (value, value2) {
 			result = value + ', ' + value2;
 		});
 
@@ -288,8 +286,7 @@ describe('Azazel:target', function () {
 	it('event passing data', function () {
 		var result = false;
 
-		obj.on('foo', function (e, value) {
-			assert.strictEqual(e.name, 'foo');
+		obj.on('foo', function (value) {
 			result = value;
 		});
 
@@ -301,8 +298,7 @@ describe('Azazel:target', function () {
 	it('event passing data', function () {
 		var result = false;
 
-		obj.on('foo', function (e, value, value2) {
-			assert.strictEqual(e.name, 'foo');
+		obj.on('foo', function (value, value2) {
 			result = value + ', ' + value2;
 		});
 

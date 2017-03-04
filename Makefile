@@ -7,13 +7,6 @@ min: install
 	@echo "minified version"
 	@$(shell npm bin)/uglifyjs azazel.js -o azazel.min.js -c -m
 
-umd:
-	@echo "umd versions"
-	@ cat wrapper-umd.js > azazel.umd.js
-	@ cat azazel.js >> azazel.umd.js
-	@ echo "}));" >> azazel.umd.js
-	@$(shell npm bin)/uglifyjs azazel.umd.js -o azazel.umd.min.js -c -m
-
 test.events:
 	$(shell npm bin)/mocha tests
 
@@ -28,7 +21,7 @@ karma.min: export TEST_JS = min
 karma.min: min
 	@$(shell npm bin)/karma start karma.conf.js
 
-test: install test.events test.events-min umd karma karma.min
+test: install test.events test.events-min karma karma.min
 
 build: test
 	node make build
