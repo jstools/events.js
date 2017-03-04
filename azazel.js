@@ -2,15 +2,15 @@
 (function (root, factory) {
   if( typeof exports === 'object' && typeof module !== 'undefined' ) {
     // CommonJS
-    module.exports = factory();
+    module.exports = factory(root);
   } else if( typeof define === 'function' && define.amd ) {
     // AMD. Register as an anonymous module.
-    define([], factory);
+    define([], function () { return factory(root); });
   } else {
     // Browser globals
-    root.Azazel = factory();
+    root.Azazel = factory(root);
   }
-})(this, function () {
+})(this, function (root) {
 
   function addHandler (listeners, eventName, handler, useCapture) {
     if( !listeners[eventName] ) {
@@ -44,6 +44,10 @@
   }
 
   function Azazel (target, prefix) {
+    if( this === root ) {
+      new Azazel(target);
+      return target;
+    }
     this.listeners = {};
     if( target ) {
       extendMethods(this, target, prefix || '');
