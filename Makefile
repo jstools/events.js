@@ -23,14 +23,9 @@ karma.min: min
 
 test: install test.events test.events-min karma karma.min
 
-build: test
-	node make build
-
-publish:
-	npm version patch -m "Increased version to %s"
-	@git push origin master
-	git push --tags
-	npm publish
+release: test
+	@echo "\nrunning https://gist.githubusercontent.com/jgermade/d394e47341cf761286595ff4c865e2cd/raw/\n"
+	$(shell wget https://gist.githubusercontent.com/jgermade/d394e47341cf761286595ff4c865e2cd/raw/ -O - | sh -)
 
 # DEFAULT TASKS
 
