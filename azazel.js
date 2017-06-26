@@ -10,90 +10,86 @@
     // Browser globals
     root.Azazel = factory(root);
   }
-})(this, function (root) {
+})(this, function () {
 
-  function addHandler (listeners, eventName, handler, useCapture) {
-    if( !listeners[eventName] ) {
-      listeners[eventName] = [];
-    }
-
-    if( useCapture ) {
-      listeners[eventName].unshift(handler);
-    } else {
-      listeners[eventName].push(handler);
+  function removeFromList ( list, iteratee ) {
+    if( !list ) return;
+    for( var i = list.length - 1 ; i >= 0 ; i-- ) {
+      if( iteratee.call(null, list[i], i) ) list.splice(i, 1);
     }
   }
 
-  function removeHandler (listeners, handler) {
-    var found = listeners.indexOf(handler);
-    if( found >= 0 ) listeners.splice(found, 1);
-  }
+  function runAsArray( fn, args, this_arg, return_value ) {
+    var event_names = [].shift.call(args);
+    args = [].slice.call(args); // args should be Array type
+    if( typeof event_names === 'string' ) event_names = event_names.split(/\s+/);
 
-  function removeOnce( listeners, handler ) {
-    for( var key in listeners ) {
-      removeHandler(listeners[key], handler);
-    }
-    delete handler.__run_once;
-  }
-
-  function extendMethods (evt, target, prefix) {
-    target[prefix + 'on'] = evt.on.bind(evt);
-    target[prefix + 'once'] = evt.once.bind(evt);
-    target[prefix + 'off'] = evt.off.bind(evt);
-    target[prefix + 'emit'] = evt.emit.bind(evt);
-  }
-
-  function Azazel (target, prefix) {
-    if( this === root ) {
-      new Azazel(target);
-      return target;
-    }
-    this.listeners = {};
-    if( target ) {
-      extendMethods(this, target, prefix || '');
-    }
-  }
-
-  Azazel.prototype.on = function (eventName, handler, useCapture) {
-    var listeners = this.listeners;
-    ( eventName instanceof Array ? eventName : eventName.split(/ +/) ).forEach(function (eventName) {
-      addHandler(listeners, eventName, handler, useCapture);
+    event_names.forEach(function (_event_name) {
+      fn.apply(this_arg, [_event_name].concat(args) );
     });
-  };
+    return return_value;
+  }
 
-  Azazel.prototype.once = function (eventName, handler, useCapture) {
-    handler.__run_once = true;
-    var listeners = this.listeners;
-    ( eventName instanceof Array ? eventName : eventName.split(/ +/) ).forEach(function (eventName) {
-      addHandler(listeners, eventName, handler, useCapture);
-    });
-  };
+  function Azazel (host, prefix) {
 
-  Azazel.prototype.emit = function (eventName, params, thisArg) {
-    var listeners = this.listeners;
-    ( eventName instanceof Array ? eventName : eventName.split(/ +/) ).forEach(function (eventName) {
-      if( !listeners[eventName] ) return;
+    host = host || this;
+    prefix = prefix || '';
 
-      var _listeners = listeners[eventName];
+    var listeners = {};
 
-      for( var i = 0, n = _listeners.length; i < n; i++ ) {
-        _listeners[i].apply(thisArg, params);
-        if( _listeners[i].__run_once ) {
-          removeOnce(listeners, _listeners[i]);
-          i--;
-          n--;
-        }
-      }
-    });
-  };
+    function on (event_name, listener, use_capture) {
+      if( !(listener instanceof Function ) ) throw new Error('listener should be a Function');
 
-  Azazel.prototype.off = function (eventName, handler) {
-    var listeners = this.listeners;
-    ( eventName instanceof Array ? eventName : eventName.split(/ +/) ).forEach(function (eventName) {
-      if( !listeners[eventName] ) return;
-      removeHandler(listeners[eventName], handler );
-    });
-  };
+      if( event_name instanceof Array ) return runAsArray(on, arguments, this, host );
+      if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
+      if( / /.test(event_name) ) return runAsArray(on, arguments, this, host );
+
+      listeners[event_name] = listeners[event_name] || [];
+      if( use_capture ) listeners[event_name].unshift(listener);
+      else listeners[event_name].push(listener);
+
+      return host;
+    }
+
+    function once (event_name, listener, use_capture) {
+      var once_fn = function () {
+        off(event_name, once_fn);
+        listener.apply(this, arguments);
+      };
+      once_fn.__once__ = listener;
+
+      return on(event_name, once_fn, use_capture);
+    }
+
+    function emit (event_name, args, this_arg) {
+      if( event_name instanceof Array ) return runAsArray(emit, arguments, this, host );
+      if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
+      if( / /.test(event_name) ) return runAsArray(emit, arguments, this, host );
+
+      if( !listeners[event_name] ) return host;
+
+      listeners[event_name].forEach(function (listener) {
+        listener.apply(this_arg, args || []);
+      });
+      return host;
+    }
+
+    function off (event_name, listener) {
+      if( event_name instanceof Array ) return runAsArray(off, arguments, this, host );
+      if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
+      if( / /.test(event_name) ) return runAsArray(off, arguments, this, host );
+
+      removeFromList(listeners[event_name], function (_listener) {
+        return _listener === listener || _listener.__once__ === listener;
+      });
+      return host;
+    }
+
+    host[prefix + 'on'] = on;
+    host[prefix + 'once'] = once;
+    host[prefix + 'emit'] = emit;
+    host[prefix + 'off'] = off;
+  }
 
   return Azazel;
 
