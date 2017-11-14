@@ -55,7 +55,7 @@ github.release:
 	@echo ${RELEASE_URL}
 	@true
 
-release: npm.install npm.publish github.release
+release: npm.publish github.release
 
 # DEFAULT TASKS
 
