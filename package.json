@@ -4,7 +4,7 @@
   "description": "simple javascript events handler",
   "main": "dist/azazel.js",
   "scripts": {
-    "test": "$(npm bin)/mocha tests"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
