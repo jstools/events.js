@@ -3,12 +3,6 @@
 module.exports = function(config) {
   'use strict';
 
-  var test_file = process.env.TEST_JS === 'min' ? 'azazel.min.js' : 'azazel.js';
-
-  /* eslint-disable */
-  console.log('test_file', test_file);
-  /* eslint-enable */
-
   var configuration = {
     frameworks: ['mocha', 'chai'],
     plugins: [
@@ -19,7 +13,7 @@ module.exports = function(config) {
       'karma-story-reporter'
     ],
     files: [
-      test_file,
+      'dist/azazel.min.js',
       'tests/{,**/}*.js'
     ],
     browsers: [ 'Chrome', 'Firefox' ],

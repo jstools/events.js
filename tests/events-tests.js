@@ -1,13 +1,10 @@
-/* global require, describe, it, beforeEach, process */
+/* global require, describe, it, beforeEach */
 
 if( typeof require !== 'undefined' ) { // if is nodejs (not browser)
 
-var Azazel = require( process.env.TEST_JS === 'min' ? '../azazel.min' : '../azazel' ),
-		assert = require('assert');
+	var Azazel = require('../dist/azazel'),
+			assert = require('assert');
 
-/* eslint-disable */
-	console.log('testing', process.env.TEST_JS === 'min' ? 'azazel.min.js' : 'azazel.js' );
-/* eslint-enable */
 }
 
 

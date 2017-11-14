@@ -2,7 +2,7 @@
   "name": "azazel",
   "version": "1.1.4",
   "description": "simple javascript events handler",
-  "main": "azazel.js",
+  "main": "dist/azazel.js",
   "scripts": {
     "test": "$(npm bin)/mocha tests"
   },
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/kiltjs/azazel",
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^4.11.0",
     "karma": "^1.5.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.0.0",
@@ -31,6 +32,7 @@
     "karma-story-reporter": "^0.3.1",
     "mocha": "^3.2.0",
     "nitro": "^1.12.30",
+    "rollup": "^0.51.5",
     "uglify-js": "^2.8.5"
   }
 }
