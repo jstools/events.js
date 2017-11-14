@@ -50,7 +50,7 @@ github.release: export PKG_NAME=$(shell node -e "console.log(require('./package.
 github.release: export PKG_VERSION=$(shell node -e "process.stdout.write('v'+require('./package.json').version);")
 github.release: export RELEASE_URL=$(shell curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${GITHUB_TOKEN}" \
 	-d '{"tag_name": "${PKG_VERSION}", "target_commitish": "$(git_branch)", "name": "${PKG_VERSION}", "body": "", "draft": false, "prerelease": false}' \
-	-w '%{url_effective}' "https://api.github.com/repos/aplazame/address-typeahead/releases" )
+	-w '%{url_effective}' "https://api.github.com/repos/kiltjs/azazel/releases" )
 github.release:
 	@echo ${RELEASE_URL}
 	@true
