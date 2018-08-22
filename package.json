@@ -1,8 +1,8 @@
 {
-  "name": "azazel",
+  "name": "@kilt/azazel",
   "version": "1.1.7",
   "description": "simple javascript events handler",
-  "main": "dist/azazel.js",
+  "main": "azazel.js",
   "scripts": {
     "test": "make test"
   },
@@ -22,17 +22,16 @@
   },
   "homepage": "https://github.com/kiltjs/azazel",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^4.11.0",
-    "karma": "^1.5.0",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-mocha": "^1.3.0",
-    "karma-story-reporter": "^0.3.1",
-    "mocha": "^3.2.0",
-    "nitro": "^1.12.30",
-    "rollup": "^0.51.5",
-    "uglify-js": "^2.8.5"
+    "chai": "4.1.2",
+    "eslint": "5.4.0",
+    "karma": "3.0.0",
+    "karma-chai": "0.1.0",
+    "karma-chrome-launcher": "2.0.0",
+    "karma-firefox-launcher": "1.0.0",
+    "karma-mocha": "1.3.0",
+    "karma-story-reporter": "0.3.1",
+    "mocha": "5.2.0",
+    "rollup": "0.64.1",
+    "uglify-js": "3.4.7"
   }
 }

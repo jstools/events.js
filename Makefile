@@ -7,8 +7,8 @@ lint:
 	$(shell npm bin)/eslint src
 
 build: install
-	$(shell npm bin)/rollup src/azazel.js --format cjs --output dist/azazel.js
-	$(shell npm bin)/rollup src/azazel.js --format umd --output dist/azazel.min.js -n Azazel
+	$(shell npm bin)/rollup src/azazel.js --output.format cjs --output.file dist/azazel.js
+	$(shell npm bin)/rollup src/azazel.js --output.format umd --output.file dist/azazel.min.js -n Azazel
 	$(shell npm bin)/uglifyjs dist/azazel.min.js -o dist/azazel.min.js -c -m
 
 test.events:
@@ -34,17 +34,19 @@ git.tag: export PKG_VERSION=$(shell node -e "process.stdout.write('v'+require('.
 git.tag:
 	git pull --tags
 	git add dist -f --all
-	-git commit -n -m "${PKG_VERSION}" 2> /dev/null; true
+	- git commit -n -m "${PKG_VERSION}" 2> /dev/null; true
 	git tag -a $(PKG_VERSION) -m "$(PKG_VERSION)"
 	git push --tags
 	# git push origin $(git_branch)
 
 npm.publish: build test npm.pushVersion git.tag
-	npm publish
-	git reset --soft HEAD~1
-	git reset HEAD
-	# git reset --hard origin/$(git_branch)
-	@git checkout $(git_branch)
+	cp package.json dist
+	cp README.md dist
+	cp LICENSE dist
+	- cd dist && npm publish --access public
+	- node -e "var fs = require('fs'); var pkg = require('./dist/package.json'); pkg.name = 'azazel'; fs.writeFile('dist/package.json', JSON.stringify(pkg, null, '  '), 'utf8', function (err) { if( err ) console.log('Error: ' + err); });"
+	- cd dist && npm publish
+	cp package.json dist
 
 github.release: export PKG_NAME=$(shell node -e "console.log(require('./package.json').name);")
 github.release: export PKG_VERSION=$(shell node -e "process.stdout.write('v'+require('./package.json').version);")
@@ -53,7 +55,11 @@ github.release: export RELEASE_URL=$(shell curl -s -X POST -H "Content-Type: app
 	-w '%{url_effective}' "https://api.github.com/repos/kiltjs/azazel/releases" )
 github.release:
 	@echo ${RELEASE_URL}
-	@true
+	git reset --soft HEAD~1
+	git reset HEAD
+	# git reset --hard origin/$(git_branch)
+	@git checkout $(git_branch)
+	# @true
 
 release: npm.publish github.release
 
