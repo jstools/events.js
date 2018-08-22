@@ -9,7 +9,8 @@ Another events handler/wrapper that can be attached to an object.
 Installation
 ------------
 ``` sh
-npm install -S @kilt/azazel
+# npm install --save @kilt/azazel
+npm i -S @kilt/azazel
 ```
 
 Usage
