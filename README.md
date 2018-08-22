@@ -1,6 +1,6 @@
-# Azazel
+# @kilt/azazel
 
-Another events handler that can be attached to an object.
+Another events handler/wrapper that can be attached to an object.
 
 [![](https://img.shields.io/npm/v/@kilt/azazel.svg)](https://www.npmjs.com/package/@kilt/azazel)
 [![Build Status](https://travis-ci.org/kiltjs/azazel.svg?branch=master)](https://travis-ci.org/kiltjs/azazel)
@@ -9,10 +9,7 @@ Another events handler that can be attached to an object.
 Installation
 ------------
 ``` sh
-npm install azazel --save
-
-# alternatively you can use bower (minified version by default)
-bower install azazel --save
+npm install @kilt/azazel --save
 ```
 
 Usage
