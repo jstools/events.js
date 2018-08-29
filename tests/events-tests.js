@@ -47,6 +47,56 @@ if( typeof require !== 'undefined' ) { // if is nodejs (not browser)
 			assert.strictEqual(count, 2);
 		});
 
+		it('event watch args (pre)', function () {
+			var same_args = 'same_args', args = [same_args], result;
+
+			obj.emit('foo', args);
+
+			obj.watch('foo', function (_result) {
+				result = _result;
+			});
+
+			assert.strictEqual(result, same_args);
+		});
+
+		it('event watch args (post)', function () {
+			var same_args = 'same_args', args = [same_args], result;
+
+			obj.watch('foo', function (_result) {
+				result = _result;
+			});
+
+			obj.emit('foo', args);
+
+			assert.strictEqual(result, same_args);
+		});
+
+		it('event watch this (pre)', function () {
+			var same_this = {}, result;
+
+			obj.emit('foo', [null], same_this);
+
+			obj.watch('foo', function (_result) {
+				assert.strictEqual(_result, null);
+				result = this;
+			});
+
+			assert.strictEqual(result, same_this);
+		});
+
+		it('event watch this (pre)', function () {
+			var same_this = {}, result;
+
+			obj.watch('foo', function (_result) {
+				assert.strictEqual(_result, null);
+				result = this;
+			});
+
+			obj.emit('foo', [null], same_this);
+
+			assert.strictEqual(result, same_this);
+		});
+
 		it('event multi-suscription', function () {
 			var count = 0;
 

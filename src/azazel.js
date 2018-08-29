@@ -52,13 +52,14 @@ function Azazel (host, prefix) {
 
   function watch (event_name, listener, use_capture) {
     if( !(listener instanceof Function ) ) throw new Error('listener should be a Function');
-    if( events_emitted[event_name] ) listener();
-    if( !events_emitted[event_name] || use_capture !== 'once' ) _on(event_name, listener, use_capture);
+    var last_emitted = events_emitted[event_name];
+    if( last_emitted ) listener.apply(last_emitted.this_arg, last_emitted.args);
+    if( !last_emitted || use_capture !== 'once' ) _on(event_name, listener, use_capture);
     return host;
   }
 
   function _emit (event_name, args, this_arg) {
-    if( !events_emitted[event_name] ) events_emitted[event_name] = true;
+    events_emitted[event_name] = { args: args, this_arg: this_arg };
 
     if( listeners[event_name] ) listeners[event_name].forEach(function (listener) {
       listener.apply(this_arg, args || []);
