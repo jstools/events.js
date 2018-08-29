@@ -1,81 +1,102 @@
 
-function removeFromList ( list, iteratee ) {
-  if( !list ) return;
+function removeFromList ( list, item ) {
   for( var i = list.length - 1 ; i >= 0 ; i-- ) {
-    if( iteratee.call(null, list[i], i) ) list.splice(i, 1);
+    if( item === list[i] ) list.splice(i, 1);
   }
 }
 
-function runAsArray( fn, args, this_arg, return_value ) {
-  var event_names = [].shift.call(args);
-  args = [].slice.call(args); // args should be Array type
-  if( typeof event_names === 'string' ) event_names = event_names.split(/\s+/);
+function _normalizeEventName (fn, host, test_listener) {
+  return function _fn (event_name, listener, use_capture) {
+    if( test_listener !== false && !(listener instanceof Function ) ) throw new Error('listener should be a Function');
 
-  event_names.forEach(function (_event_name) {
-    fn.apply(this_arg, [_event_name].concat(args) );
-  });
-  return return_value;
+    if( event_name instanceof Array ) {
+      event_name.forEach(function (_event_name) {
+        _fn(_event_name, listener, use_capture);
+      });
+      return host;
+    }
+    // runAsArray(fn, arguments, this, host );
+    if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
+    if( / /.test(event_name) ) return _fn(event_name.split(/ +/), listener, use_capture);
+
+    fn.apply(this, arguments);
+
+    return host;
+  };
 }
 
 function Azazel (host, prefix) {
 
-  host = host || this;
+  host = host || (this instanceof Azazel ? this : {});
   prefix = prefix || '';
 
-  var listeners = {};
+  var listeners = {},
+      listeners_once = {},
+      events_emitted = {};
 
-  function on (event_name, listener, use_capture) {
-    if( !(listener instanceof Function ) ) throw new Error('listener should be a Function');
-
-    if( event_name instanceof Array ) return runAsArray(on, arguments, this, host );
-    if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
-    if( / /.test(event_name) ) return runAsArray(on, arguments, this, host );
-
+  function _on (event_name, listener, use_capture) {
     listeners[event_name] = listeners[event_name] || [];
     if( use_capture ) listeners[event_name].unshift(listener);
     else listeners[event_name].push(listener);
+  }
 
+  var on = _normalizeEventName(_on, host);
+
+  function _once (event_name, listener, use_capture) {
+    listeners_once[event_name] = listeners_once[event_name] || [];
+    if( use_capture ) listeners_once[event_name].unshift(listener);
+    else listeners_once[event_name].push(listener);
+  }
+
+  var once = _normalizeEventName(_once, host);
+
+  function watch (event_name, listener, use_capture) {
+    if( !(listener instanceof Function ) ) throw new Error('listener should be a Function');
+    if( events_emitted[event_name] ) listener();
+    if( !events_emitted[event_name] || use_capture !== 'once' ) _on(event_name, listener, use_capture);
     return host;
   }
 
-  function once (event_name, listener, use_capture) {
-    var once_fn = function () {
-      off(event_name, once_fn);
-      listener.apply(this, arguments);
-    };
-    once_fn.__once__ = listener;
+  function _emit (event_name, args, this_arg) {
+    if( !events_emitted[event_name] ) events_emitted[event_name] = true;
 
-    return on(event_name, once_fn, use_capture);
-  }
-
-  function emit (event_name, args, this_arg) {
-    if( event_name instanceof Array ) return runAsArray(emit, arguments, this, host );
-    if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
-    if( / /.test(event_name) ) return runAsArray(emit, arguments, this, host );
-
-    if( !listeners[event_name] ) return host;
-
-    listeners[event_name].forEach(function (listener) {
+    if( listeners[event_name] ) listeners[event_name].forEach(function (listener) {
       listener.apply(this_arg, args || []);
     });
-    return host;
+
+    if( listeners_once[event_name] ) {
+      _emitOnce(listeners_once[event_name], args, this_arg);
+      delete listeners_once[event_name];
+    }
   }
 
-  function off (event_name, listener) {
-    if( event_name instanceof Array ) return runAsArray(off, arguments, this, host );
-    if( typeof event_name !== 'string' ) throw new Error('event_name should be a string');
-    if( / /.test(event_name) ) return runAsArray(off, arguments, this, host );
-
-    removeFromList(listeners[event_name], function (_listener) {
-      return _listener === listener || _listener.__once__ === listener;
+  function _emitOnce (listeners_list, args, this_arg) {
+    listeners_list.forEach(function (listener) {
+      listener.apply(this_arg, args || []);
     });
-    return host;
+
+    for( var event_name in listeners_once ) {
+      if( listeners_once[event_name] !== listeners_list ) listeners_list.forEach(function (_listener) {
+        if( listeners_once[event_name] ) removeFromList(listeners_once[event_name], _listener );
+      });
+    }
+  }
+
+  var emit = _normalizeEventName(_emit, host, false);
+
+  function off (event_name, listener) {
+    if( listeners[event_name] ) removeFromList(listeners[event_name], listener );
+    if( listeners_once[event_name] ) removeFromList(listeners_once[event_name], listener );
   }
 
   host[prefix + 'on'] = on;
   host[prefix + 'once'] = once;
+  host[prefix + 'watch'] = watch; // like watch but triggering
+
   host[prefix + 'emit'] = emit;
-  host[prefix + 'off'] = off;
+  host[prefix + 'off'] = _normalizeEventName(off);
+
+  return host;
 }
 
 export default Azazel;

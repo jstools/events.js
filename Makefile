@@ -6,10 +6,12 @@ install:
 lint:
 	$(shell npm bin)/eslint src
 
-build: install
+build:
 	$(shell npm bin)/rollup src/azazel.js --output.format cjs --output.file dist/azazel.js
 	$(shell npm bin)/rollup src/azazel.js --output.format umd --output.file dist/azazel.min.js -n Azazel
 	$(shell npm bin)/uglifyjs dist/azazel.min.js -o dist/azazel.min.js -c -m
+
+install-build: install build
 
 test.events:
 	$(shell npm bin)/mocha tests
@@ -65,4 +67,4 @@ release: npm.publish github.release
 
 # DEFAULT TASKS
 
-.DEFAULT_GOAL := build
+.DEFAULT_GOAL := install-build

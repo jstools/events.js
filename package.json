@@ -4,6 +4,7 @@
   "description": "simple javascript events handler",
   "main": "azazel.js",
   "scripts": {
+    "pretest": "npm install",
     "test": "make test"
   },
   "repository": {
