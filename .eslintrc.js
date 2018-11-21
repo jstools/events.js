@@ -13,6 +13,7 @@ module.exports = {
       "sourceType": "module",
     },
     "rules": {
+      "no-console": 1,
       "linebreak-style": [
           "error",
           "unix"
@@ -23,7 +24,7 @@ module.exports = {
       ],
       "semi": [
           "error",
-          "always"
+          "never"
       ],
       "no-unused-vars": [
           "error",

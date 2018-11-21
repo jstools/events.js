@@ -3,226 +3,300 @@
 if( typeof require !== 'undefined' ) { // if is nodejs (not browser)
 
 	var Azazel = require('../dist/azazel'),
-			assert = require('assert');
+			assert = require('assert')
 
 }
 
+function _syncNextTick (fn) { fn.apply(this, arguments) }
+var _asyncNextTick = setTimeout;
+
+[_syncNextTick, _asyncNextTick].forEach(function (_nextTick, i) {
+
+var is_async = i > 0
+var _options = {
+	async: is_async,
+};
+
 [false, true].forEach(function (is_target) {
 
-	describe('Azazel' + ( is_target ? ':target' : '' ), function () {
+	describe((is_async ? '[async]' : '[sync]') + ' Azazel' + ( is_target ? ':target' : '' ), function () {
 
-		var obj;
+		var obj
 
 		beforeEach(function () {
-			obj = is_target ? new Azazel({ is_target: true }) : new Azazel();
-		});
+			obj = is_target ? new Azazel({ is_target: true }, _options) : new Azazel(null, _options)
+		})
 
 		it('testing target', function () {
-			assert.strictEqual( obj.is_target , is_target ? true : undefined );
-		});
+			assert.strictEqual( obj.is_target , is_target ? true : undefined )
+		})
 
-		it('event suscription', function () {
-			var flag = false;
+		it('event subscription', function (done) {
+			var flag = false
 
 			obj.on('foo', function () {
-				flag = true;
-			});
+				flag = true
+			})
 
-			obj.emit('foo');
+			obj.emit('foo')
 
-			assert.strictEqual(flag, true);
-		});
+			_nextTick(function () {
+				console.log('event subscription')
+				assert.strictEqual(flag, true)
+				done()
+			})
 
-		it('event watch', function () {
-			var count = 0;
+		})
 
-			obj.emit('foo');
+		it('event watch', function (done) {
+			var count = 0
+
+			obj.emit('foo')
 
 			obj.watch('foo', function () {
-				count += 1;
-			});
+				count += 1
+			})
 
-			obj.emit('foo');
+			obj.emit('foo')
 
-			assert.strictEqual(count, 2);
-		});
+			_nextTick(function () {
+				assert.strictEqual(count, 2)
+				done()
+			})
 
-		it('event watch args (pre)', function () {
-			var same_args = 'same_args', args = [same_args], result;
+		})
 
-			obj.emit('foo', args);
+		it('event watch args (pre)', function (done) {
+			var same_args = 'same_args', args = [same_args], result
 
-			obj.watch('foo', function (_result) {
-				result = _result;
-			});
-
-			assert.strictEqual(result, same_args);
-		});
-
-		it('event watch args (post)', function () {
-			var same_args = 'same_args', args = [same_args], result;
+			obj.emit('foo', args)
 
 			obj.watch('foo', function (_result) {
-				result = _result;
-			});
+				result = _result
+			})
 
-			obj.emit('foo', args);
+			_nextTick(function () {
+				assert.strictEqual(result, same_args)
+				done()
+			})
 
-			assert.strictEqual(result, same_args);
-		});
+		})
 
-		it('event watch this (pre)', function () {
-			var same_this = {}, result;
-
-			obj.emit('foo', [null], same_this);
-
-			obj.watch('foo', function (_result) {
-				assert.strictEqual(_result, null);
-				result = this;
-			});
-
-			assert.strictEqual(result, same_this);
-		});
-
-		it('event watch this (pre)', function () {
-			var same_this = {}, result;
+		it('event watch args (post)', function (done) {
+			var same_args = 'same_args', args = [same_args], result
 
 			obj.watch('foo', function (_result) {
-				assert.strictEqual(_result, null);
-				result = this;
-			});
+				result = _result
+			})
 
-			obj.emit('foo', [null], same_this);
+			obj.emit('foo', args)
 
-			assert.strictEqual(result, same_this);
-		});
+			_nextTick(function () {
+				assert.strictEqual(result, same_args)
+				done()
+			})
+		})
 
-		it('event multi-suscription', function () {
-			var count = 0;
+		it('event watch this (pre)', function (done) {
+			var same_this = {}, result
+
+			obj.emit('foo', [null], same_this)
+
+			obj.watch('foo', function (_result) {
+				assert.strictEqual(_result, null)
+				result = this
+			})
+
+			_nextTick(function () {
+				assert.strictEqual(result, same_this)
+				done()
+			})
+
+		})
+
+		it('event watch this (pre)', function (done) {
+			var same_this = {}, result
+
+			obj.watch('foo', function (_result) {
+				assert.strictEqual(_result, null)
+				result = this
+			})
+
+			obj.emit('foo', [null], same_this)
+
+			_nextTick(function () {
+				assert.strictEqual(result, same_this)
+				done()
+			})
+
+		})
+
+		it('event multi-subscription', function (done) {
+			var count = 0
 
 			obj.on('foo bar', function () {
-				count++;
-			});
+				count++
+			})
 
-			obj.emit('foo');
-			obj.emit('bar');
+			obj.emit('foo')
+			obj.emit('bar')
 
-			assert.strictEqual(count, 2);
-		});
+			_nextTick(function () {
+				assert.strictEqual(count, 2)
+				done()
+			})
 
-		it('event multi-suscription', function () {
-			var count = 0;
+		})
+
+		it('event multi-subscription', function (done) {
+			var count = 0
 
 			obj.on(['foo','bar'], function () {
-				count++;
-			});
+				count++
+			})
 
-			obj.emit('foo');
-			obj.emit('bar');
+			obj.emit('foo')
+			obj.emit('bar')
 
-			assert.strictEqual(count, 2);
-		});
+			_nextTick(function () {
+				assert.strictEqual(count, 2)
+				done()
+			})
 
-		it('event suscription twice', function () {
-			var count = false;
+		})
+
+		it('event subscription twice', function (done) {
+			var count = false
 
 			obj.on('foo', function () {
-				count++;
-			});
+				count++
+			})
 
-			obj.emit('foo');
-			obj.emit('foo');
+			obj.emit('foo')
+			obj.emit('foo')
 
-			assert.strictEqual(count, 2);
-		});
+			_nextTick(function () {
+				assert.strictEqual(count, 2)
+				done()
+			})
 
-		it('event suscription once', function () {
-			var count = false;
+		})
+
+		it('event subscription once', function (done) {
+			var count = false
 
 			obj.once('foo', function () {
-				count++;
-			});
+				count++
+			})
 
-			obj.emit('foo');
-			obj.emit('foo');
+			obj.emit('foo')
+			obj.emit('foo')
 
-			assert.strictEqual(count, 1);
-		});
+			_nextTick(function () {
+				assert.strictEqual(count, 1)
+				done()
+			})
 
-		it('event multi-suscription once', function () {
-			var count = 0;
+		})
+
+		it('event multi-subscription once', function (done) {
+			var count = 0
 
 			obj.once('foo bar', function () {
-				count++;
-			});
+				count++
+			})
 
-			obj.emit('foo');
-			obj.emit('bar');
+			obj.emit('foo')
+			obj.emit('bar')
 
-			obj.emit('foo');
-			obj.emit('bar');
+			obj.emit('foo')
+			obj.emit('bar')
 
-			assert.strictEqual(count, 1);
-		});
+			_nextTick(function () {
+				assert.strictEqual(count, 1)
+				done()
+			})
 
-		it('event suscription off', function () {
+		})
+
+		it('event subscription off', function (done) {
 			var count = false,
 					increaseCount = function () {
-						count++;
-					};
+						count++
+					}
 
-			obj.on('foo', increaseCount);
+			obj.on('foo', increaseCount)
 
-			obj.emit('foo');
-			obj.emit('foo');
+			obj.emit('foo')
+			obj.emit('foo')
 
-			obj.off('foo', increaseCount);
+			_nextTick(function () {
+				obj.off('foo', increaseCount)
 
-			obj.emit('foo');
+				obj.emit('foo')
 
-			assert.strictEqual(count, 2);
-		});
+				_nextTick(function () {
+					assert.strictEqual(count, 2)
+					done()
+				})
+			})
 
-		it('event multi-suscription off', function () {
+		})
+
+		it('event multi-subscription off', function (done) {
 			var count = false,
 					increaseCount = function () {
-						count++;
-					};
+						count++
+					}
 
-			obj.on('foo bar', increaseCount);
+			obj.on('foo bar', increaseCount)
 
-			obj.emit('foo bar');
+			obj.emit('foo bar')
 
-			obj.off('foo bar', increaseCount);
+			_nextTick(function () {
+				obj.off('foo bar', increaseCount)
 
-			obj.emit('foo bar');
+				obj.emit('foo bar')
 
-			assert.strictEqual(count, 2);
-		});
+				_nextTick(function () {
+					assert.strictEqual(count, 2)
+					done()
+				})
+			})
 
-		it('event passing data', function () {
-			var result = false;
+		})
+
+		it('event passing data', function (done) {
+			var result = false
 
 			obj.on('foo', function (value) {
-				result = value;
-			});
+				result = value
+			})
 
-			obj.emit('foo', ['bar']);
+			obj.emit('foo', ['bar'])
 
-			assert.strictEqual(result, 'bar');
-		});
+			_nextTick(function () {
+				assert.strictEqual(result, 'bar')
+				done()
+			})
+		})
 
-		it('event passing data', function () {
-			var result = false;
+		it('event passing data', function (done) {
+			var result = false
 
 			obj.on('foo', function (value, value2) {
-				result = value + ', ' + value2;
-			});
+				result = value + ', ' + value2
+			})
 
-			obj.emit('foo', ['foo', 'bar']);
+			obj.emit('foo', ['foo', 'bar'])
 
-			assert.strictEqual(result, 'foo, bar');
-		});
-	});
+			_nextTick(function () {
+				assert.strictEqual(result, 'foo, bar')
+				done()
+			})
+		})
+	})
 
-});
+})
+
+})
