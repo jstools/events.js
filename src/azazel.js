@@ -1,20 +1,6 @@
-/* global global, window, self */
+/* global, window, self */
 
-var _asyncNextTick = (function (_global, _raf_prefixes) {
-
-  if( 'nextTick' in _global ) return _global.nextTick
-
-  for( var _prefix in _raf_prefixes ) {
-    if( _global[_prefix + 'equestAnimationFrame'] instanceof Function )
-      return _global[_prefix + 'equestAnimationFrame']
-  }
-
-  return setTimeout
-
-})(
-  typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : typeof window !== 'undefined' ? window : {},
-  'r, webkitR, mozR, oR, msR'.split(/ *, */)
-)
+import _asyncNextTick from './next-tick'
 
 var _syncNextTick = function (fn) { fn.apply(this, arguments) }
 
@@ -82,7 +68,11 @@ function Azazel (host, options) {
     return host
   }
 
-  function _emit (event_name, args, this_arg) {
+  function _emit (event_name, args, this_arg, callback) {
+    if( this_arg instanceof Function ) {
+      callback = this_arg
+      this_arg = null
+    }
     _nextTick(function () {
       events_emitted[event_name] = { args: args, this_arg: this_arg }
 
@@ -94,6 +84,8 @@ function Azazel (host, options) {
         _emitOnce(listeners_once[event_name], args, this_arg)
         delete listeners_once[event_name]
       }
+
+      if( callback instanceof Function ) callback.apply(this_arg, args || [])
     })
   }
 

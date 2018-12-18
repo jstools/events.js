@@ -41,7 +41,6 @@ var _options = {
 			obj.emit('foo')
 
 			_nextTick(function () {
-				console.log('event subscription')
 				assert.strictEqual(flag, true)
 				done()
 			})
