@@ -1,6 +1,6 @@
 {
   "name": "@kilt/azazel",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "simple javascript events handler",
   "main": "azazel.js",
   "scripts": {
