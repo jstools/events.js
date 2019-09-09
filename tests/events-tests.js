@@ -65,6 +65,72 @@ var _options = {
 
 		})
 
+		it('event watch (2 listeners - before)', function (done) {
+			var count = 0
+
+			obj.emit('foo')
+
+			obj.watch('foo', function () {
+				count += 1
+			})
+
+			obj.watch('foo', function () {
+				count += 1
+			})
+
+			// obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(count, 2)
+				done()
+			})
+
+		})
+
+		it('event watch (2 listeners)', function (done) {
+			var count = 0
+
+			obj.emit('foo')
+
+			obj.watch('foo', function () {
+				count += 1
+			})
+
+			obj.watch('foo', function () {
+				count += 1
+			})
+
+			obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(count, 4)
+				done()
+			})
+
+		})
+
+		it('event watch (2 listeners - after)', function (done) {
+			var count = 0
+
+			// obj.emit('foo')
+
+			obj.watch('foo', function () {
+				count += 1
+			})
+
+			obj.watch('foo', function () {
+				count += 1
+			})
+
+			obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(count, 2)
+				done()
+			})
+
+		})
+
 		it('event watch args (pre)', function (done) {
 			var same_args = 'same_args', args = [same_args], result
 
