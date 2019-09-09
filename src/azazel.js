@@ -5,6 +5,7 @@ import _asyncNextTick from './next-tick'
 var _syncNextTick = function (fn) { fn.apply(this, arguments) }
 
 function _removeFromList ( list, item ) {
+  if( !list ) return
   for( var i = list.length - 1 ; i >= 0 ; i-- ) {
     if( item === list[i] ) list.splice(i, 1)
   }
@@ -63,11 +64,16 @@ function Azazel (host, options) {
   function watch (event_name, listener, use_capture) {
     if( !(listener instanceof Function ) ) throw new Error('listener should be a Function')
 
-    var last_emitted = events_emitted[event_name]
-    if( last_emitted ) listener.apply(last_emitted.this_arg, last_emitted.args)
-    else if( use_capture === 'once' ) _once(event_name, listener, use_capture)
-
     if( use_capture !== 'once' ) _on(event_name, listener, use_capture)
+
+    var last_emitted = events_emitted[event_name]
+
+    if( last_emitted )
+      listener.apply(last_emitted.this_arg, last_emitted.args)
+    else if( use_capture === 'once' )
+      _once(event_name, listener)
+
+    // console.log('watch', event_name, listener.name, use_capture)
 
     return host
   }
@@ -78,32 +84,33 @@ function Azazel (host, options) {
       this_arg = null
     }
     _nextTick(function () {
+      args = args || []
       events_emitted[event_name] = { args: args, this_arg: this_arg }
 
-      var _listeners = listeners[event_name] // list may be changed during execution
+      var _listeners = listeners[event_name] && listeners[event_name].slice() // list may be changed during execution
 
       if( _listeners ) _listeners.forEach(function (listener) {
-        listener.apply(this_arg, args || [])
+        listener.apply(this_arg, args)
       })
 
       _emitOnce(event_name, args, this_arg)
 
-      if( callback instanceof Function ) callback.apply(this_arg, args || [])
+      if( callback instanceof Function ) callback.apply(this_arg, args)
     })
   }
 
   function _emitOnce (event_name, args, this_arg) {
-    var _listeners = listeners_once[event_name]
+    var _listeners = listeners_once[event_name] && listeners_once[event_name].slice()
     delete listeners_once[event_name]
 
     if( !_listeners ) return
 
     _listeners.forEach(function (listener) {
-      listener.apply(this_arg, args || [])
+      listener.apply(this_arg, args)
     })
 
     for( var event_name in listeners_once ) {
-      if( listeners_once[event_name] !== _listeners ) _listeners.forEach(function (_listener) {
+      _listeners.forEach(function (_listener) {
         if( listeners_once[event_name] ) _removeFromList(listeners_once[event_name], _listener )
       })
     }

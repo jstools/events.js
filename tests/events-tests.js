@@ -131,6 +131,100 @@ var _options = {
 
 		})
 
+		it('event watch (2 listeners - off - before)', function (done) {
+			var results = []
+
+			obj.emit('foo')
+
+			obj.watch('foo', function _foo1 () {
+				results.push('foo1')
+				obj.off('foo', _foo1)
+			})
+
+			obj.watch('foo', function _foo2 () {
+				results.push('foo2')
+				obj.off('foo', _foo2)
+			})
+
+			// obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(results.join(', '), 'foo1, foo2')
+				done()
+			})
+
+		})
+
+		it('event watch (2 listeners - off)', function (done) {
+			var results = []
+
+			obj.emit('foo')
+
+			obj.watch('foo', function _foo1 () {
+				results.push('foo1')
+				obj.off('foo', _foo1)
+			})
+
+			obj.watch('foo', function _foo2 () {
+				results.push('foo2')
+				obj.off('foo', _foo2)
+			})
+
+			obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(results.join(', '), 'foo1, foo2')
+				done()
+			})
+
+		})
+
+		it('event watch (2 listeners - once)', function (done) {
+			var results = []
+
+			obj.emit('foo')
+
+			obj.watch('foo', function _foo1 () {
+				results.push('foo1')
+			}, 'once')
+
+			obj.watch('foo', function _foo2 () {
+				results.push('foo2')
+			}, 'once')
+
+			obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(results.join(', '), 'foo1, foo2')
+				done()
+			})
+
+		})
+
+		it('event watch (2 listeners - off - after)', function (done) {
+			var results = []
+
+			// obj.emit('foo')
+
+			obj.watch('foo', function _foo1 () {
+				results.push('foo1')
+				obj.off('foo', _foo1)
+			})
+
+			obj.watch('foo', function _foo2 () {
+				results.push('foo2')
+				obj.off('foo', _foo2)
+			})
+
+			obj.emit('foo')
+
+			_nextTick(function () {
+				assert.strictEqual(results.join(', '), 'foo1, foo2')
+				done()
+			})
+
+		})
+
 		it('event watch args (pre)', function (done) {
 			var same_args = 'same_args', args = [same_args], result
 
